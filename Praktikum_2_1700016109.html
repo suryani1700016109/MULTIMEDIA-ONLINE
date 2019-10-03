@@ -1,0 +1,58 @@
+<DOCTYPE html>
+<html>
+<head> 
+<title>Mouse Event</title>
+</head>
+<style type="text/css">
+   canvas{
+      background-color: pink;
+	  overflow: hidden;
+  }
+</style>
+<body>
+
+<canvas width="800" height="450" id="newCanvas"></canvas>
+<script type="text/javascript">
+	var c = document.getElementById("newCanvas");
+	var ctx=c.getContext('2d');
+	
+	//mouse draw line
+	
+	document.body.addEventListener('mousedown',drawline);
+	   function drawline(e)
+	   {
+	   var x=e.offsetX;
+	   var y=e.offsetY;
+	   ctx.lineTo(x,y);
+	   ctx.lineWidth = 2;
+	   ctx.strokeStyle = 'white';
+	   ctx.stroke();
+	   
+	   }
+	   
+	   //mouse draw line polygon 
+	   
+	   window.addEventListener("keydown", checkKeyPress, false);
+	   
+	   function checkKeyPress(key){
+	   if(key.keyCode == "13"){
+	   
+	   ctx.fillStyle = "gray";
+	   ctx.fill();
+	   
+	   }
+	   
+	   else{
+	     ctx.beginPath();
+	     var x = e.offsetX;
+	     var y = e.offsetY;
+	     ctx.lineTo(x,y);
+	     ctx.lineWidth = 2;
+	     ctx.strokeStyle = 'black';
+	     ctx.stroke();
+	     }
+	   }
+	   
+	   </script>
+	   </body>
+	  </html>
