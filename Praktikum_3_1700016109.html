@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Pattern Canvas HTML</html>
+</head>
+<body>
+
+<script type= "text/javascript">
+
+var dots=[], dotsNum=700;
+
+fucntion startMyApp()
+{
+    myApp.start();
+    for(var i=0; i<dotsNum; i++)
+    {
+        var x=myApp.canvas.width/dotsNum*i;
+        var y=Math.sin(x)*80*100;
+        dots[i]=new Sprite(x,y,10,'red');
+      }
+ }
+
+var myApp={
+    canvas:document.createElement('canvas'),
+    start: functional()
+    {
+       this.canvas.width=800;
+       this.canvas.height=450;
+       this.context=this.canvas.getContext('2d'),
+       document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+       this.interval = setInterval(appLoop, 20);
+     },
+     clear : function() {
+         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      }
+    }
+    
+    function Sprite(x,y,radius, color)
+    {
+        this.x=x;
+        this.y=y;
+        this.radius=radius;
+        this.color;
+        var ctx=myApp.context
