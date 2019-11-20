@@ -1,0 +1,204 @@
+<div id="wrapper">
+        <div id="visualizer-box">
+            <canvas id="canvas" width="800" height="350"></canvas>
+        </div>
+        <div id="filename-box">
+            <h2 id="info">Click here!</h2>
+            <div id="file-upload">
+                Open File<input type="file">
+            </div>
+        </div>
+    </div>
+<html>
+<head>
+<style type="text/css">
+    html, body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: url(assets/okk.gif);
+     background-size: cover;
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+    /*color: #FEFEFE;*/
+}
+
+#visualizer-box{
+    width: 800px;
+    margin: 5% auto auto auto;
+}
+#filename-box{
+    width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+#info{
+    color: white;
+    /*font-weight: bold;*/
+    font-weight: 400;
+
+}
+
+#file-upload{
+    /*border: 1px solid #FFEB3B;*/
+    background-color: black;
+    width: 120px;
+    margin:  0 auto;
+    position: relative;
+    text-align: center;
+    /*padding: 10px;*/
+    color: #fff;
+    line-height: 40px;
+    box-shadow: 1px 1px 2px white; 
+    overflow: hidden;
+    font-weight: bold;
+}
+
+#file-upload input[type=file]{
+    opacity: 0;
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+</style>
+<title>Audio Visualizer</title>
+</head>
+<body>
+<script type="text/javascript">
+   var fileUpload = document.querySelector('#file-upload input');
+var info = document.getElementById('info');
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var audioContext = new AudioContext();
+context.fillStyle = "transparent";
+context.fillRect(0, 0, 800, 350);
+var file;
+var fileName;
+var animationId = null;
+var source = null;
+var forceStop = false;
+
+window.onload = function () {
+
+    fileUpload.addEventListener('change', function (e) {
+        console.log(this);
+        if (this.files.length == 0) {
+            return;
+        }
+        file = this.files[0];
+        fileName = file.name;
+        updateInfo('Uploading the file', true);
+        var arrayBuffer = readFile();
+
+    })
+
+}
+
+function readFile() {
+    var fileReader = new FileReader();
+    fileReader.onload = function (e) {
+        var fileResult = e.target.result;
+        updateInfo('Decoding the audio', true);
+        audioContext.decodeAudioData(fileResult, function (buffer) {
+            updateInfo('Decode successfully, start playing', true);
+            startPlaying(buffer);
+        }, function (e) {
+            updateInfo('Fail to decode the file', false);
+            console.error(e);
+        })
+    }
+    fileReader.onerror = function (e) {
+        updateInfo('Fail to read the file', false);
+        console.error(e);
+    }
+    fileReader.readAsArrayBuffer(file);
+}
+
+function startPlaying(buffer) {
+    var audioBufferSourceNode = audioContext.createBufferSource();
+    audioBufferSourceNode.buffer = buffer;
+    var analyser = audioContext.createAnalyser();
+    audioBufferSourceNode.connect(analyser);
+    analyser.connect(audioContext.destination);
+    if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+    }
+    if (source !== null) {
+        source.stop(0);
+        forceStop = true;
+    }
+    audioBufferSourceNode.start(0);
+    source = audioBufferSourceNode;
+    source.onended = endPlaying;
+    updateInfo('Playing ' + fileName, true);
+    drawSpectrum(analyser);
+}
+
+function drawSpectrum(analyser) {
+    var gap = 3,
+        capHeight = 2,
+        capStyle = '#FEFEFE';
+    var cwidth = canvas.width;
+    var cheight = canvas.height - capHeight;
+
+    var w = 10 + gap;
+    analyser.fftSize = 256;
+    var array = new Uint8Array(analyser.frequencyBinCount);
+    console.log(array.length);
+    var meterNumber = Math.floor(cwidth / w);
+    // var gradient = context.createLinearGradient(0, 0, 0, cheight);
+    // gradient.addColorStop(0, '#8BC34A');
+    // gradient.addColorStop(0.4, '#FBC02D');
+    // gradient.addColorStop(1, '#FFEB3B');
+    var step = Math.floor(array.length / meterNumber);
+    var last = [];
+    last.length = meterNumber;
+    last.fill(0);
+
+    var drawMeter = function () {
+        analyser.getByteFrequencyData(array);
+        context.clearRect(0, 0, cwidth, cheight);
+        for (var i = 0; i < meterNumber; i++) {
+            var value = Math.floor((cheight * array[i * step]) / 255);
+            context.fillStyle = capStyle;
+            if (value > last[i]) {
+                context.fillRect(w * i, cheight - value + capHeight, w - gap, capHeight);
+                last[i] = value;
+            } else {
+                context.fillRect(w * i, cheight - last[i], w - gap, capHeight);
+                last[i] = last[i] - 1;
+            }
+            context.fillStyle = '#FFEB3B';
+            context.fillRect(w * i, cheight - value + capHeight, w - gap, value);
+        }
+        animationId = requestAnimationFrame(drawMeter);
+    }
+    animationId = requestAnimationFrame(drawMeter);
+
+}
+
+function endPlaying() {
+    if (!forceStop) {
+        cancelAnimationFrame(animationId);
+        source = null;
+        updateInfo('Hello World', true);
+    }
+    forceStop = false;
+}
+
+function updateInfo(value, bool) {
+    if (bool) {
+        info.style.color = '#fefefe';
+    } else {
+        info.style.color = '#E74C3C';
+    }
+    info.innerHTML = value;
+}
+</script>
+    </body>
+</html>
