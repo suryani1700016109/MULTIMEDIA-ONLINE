@@ -1,37 +1,468 @@
+<!DOCTYPE html>
 <html>
 <head>
-<style>
-body {
-  background-image: url("assets/hm3.jpg");
-}
- 
-h1 {
-  text-decoration: underline;
-
-}
-p {
-  font-family: "Times New Roman", Times, serif;
-}
-</style> 
-<title>CANVA HTML</title>
-<center>
-<h1 style="color:black">Hasil Praktikum Multimedia Online</h1> </center>
-<h2 style="color:black">Suryani<br><h2>
-<h2 style="color:black">1700016109</h2>
-
-
-  <p><li><a href="Praktikum_1_1700016109.html">Praktikum 1 - Canvas HTML</p></a></li>
-  <p><li><a href="Praktikum_2_1700016109.html">Praktikum 2 - Interaktivitas</p></a></li>
-  <p><li><a href="Praktikum_3_1700016109.html">Praktikum 3 - Canvas Pattern Art</p></a></li>
-  <p><li><a href="Praktikum_4_1700016109.html">Praktikum 4 - Puzzle</p></a></li>
-  <p><li><a href="Praktikum_5_1700016109.html">Praktikum 5 - Animation</p></a></li>
-  <p><li><a href="Praktikum_6_1700016109.html">Praktikum 6 - Audio Visualizer</p></a></li>
-  <p><li><a href="Praktikum_7_1700016109.html">Praktikum 7 - </p></a></li>
-  <p><li><a href="Praktikum_8_1700016109.html">Praktikum 8 - </p></a></li>
-  <p><li><a href="Praktikum_9_1700016109.html">Praktikum 9 - </p></a></li>
-  <p><li><a href="Praktikum_10_1700016109.html">Praktikum 10 - </p></a></li>
-
-</ul> 
-
+		<meta charset="utf-8">
+	<title>AUDIO VISUALIZER</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500" rel="stylesheet">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	
 </head>
+
+<style type="text/css">
+	/*
+
+COLOR SCHEME
+
+PRIMARY COLOR: #02b3e4
+SECONDARY COLOR: #015d77
+
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+}
+
+.container {
+  width: 100%;
+}
+
+/* HEADER */
+
+.header {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 0 30px #aaa;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000000;
+}
+.nav ul li {
+  display: inline-block;
+  padding: 1em;
+  font-weight: bold;
+}
+
+/* HERO IMAGE  */
+
+.hero-image {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("https://elkgroveses.com/image/26001-full_clip-cookdiary-net-dark-wood-clipart-desktop-background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.hero-text {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url("https://c4.wallpaperflare.com/wallpaper/317/630/437/artwork-simple-background-blue-stars-wallpaper-preview.jpg");
+  padding: 1.8em;
+  box-shadow: 0 0 1.5em #a0a0a0;
+  min-width: 50%;
+  max-height: calc(60vh - 3em);
+}
+
+.logo {
+  width: 5em;
+  height: auto;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 1.8em;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  margin-top: 0.5em;
+  color: white;
+}
+
+.subtitle {
+  font-size: 1.2em;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-top: 1em;
+  margin-bottom: 2em;
+  color: white;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+/* FEATURED WORKS SECTION */
+
+.featured {
+  width: 100%;
+}
+
+.featured-title {
+  font-size: 1.8em;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  margin-top: 2em;
+  color: black;
+  font-variant: small-caps;
+}
+
+.line {
+  margin: 2em;
+  color: #015d77;
+}
+
+.flex-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.works {
+  width: 22em;
+  margin: 1em auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.works-image {
+  width: 100%;
+  max-width: 500px;
+  max-height: 375px;
+}
+
+.hover-effect {
+  width: 100%;
+  max-width: 500px;
+  max-height: 375px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  opacity: 0;
+  transition: all 1s linear;
+}
+
+.hover-effect:hover {
+  opacity: 1;
+}
+
+.hover-title {
+  text-align: center;
+}
+
+.button-container {
+  margin: 1em auto;
+  text-align: center;
+}
+
+.codepen-link, .direct-link {
+  font-size: 1em;
+  font-family: inherit;
+  background-color: #fff;
+  border: solid 3px black;
+  border-radius: 5px;
+  padding: 1em;
+  margin: 0.5em auto;
+  display: block;
+  min-width: 9em;
+  max-width: 11em;
+}
+
+.codepen-link:hover, .direct-link:hover, .codepen-link:focus, .direct-link:focus {
+  box-shadow: 0 0 20px #353434;
+  transition: all 0.3s ease;
+}
+
+.scale {
+  transform: scale(1.1);
+  transition: transform 2s linear;
+  opacity: 0.8;
+}
+
+.works-title {
+  font-size: 1.5em;
+  font-weight: 300;
+  text-align: center;
+  margin-top: 0.5em;
+  color: black;
+}
+
+.footer {
+  text-align: center;
+  color: red;
+  background-color: black;
+  width: 100%;
+  margin-top: 0.8em;
+}
+
+.copyright {
+  padding: 2em 0 2em 0;
+}
+
+/* FLOAT MENU */
+
+.float-menu {
+  list-style-type: none;
+  bottom: 0;
+  left: 50%;
+  z-index: 100000;
+  min-width: 11em;
+}
+
+.float-nav {
+  display: inline;
+}
+
+.fa-fw {
+  width: 40px !important;
+  height: 40px;
+}
+
+.fa-fw:hover {
+  cursor: pointer;
+  width: 1.7em !important;
+  transition: width 2s ease;
+}
+
+@media screen and (min-width: 320px) and (orientation: landscape) {
+  .float-menu {
+    left: 0;
+    top: 50%;
+    position: fixed;
+    transform: translateY(-50%);
+  }
+  .float-nav {
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 576px)  {
+  .logo {
+    width: 7em;
+  }
+
+  .title {
+    font-size: 2.5em;
+  }
+
+  .subtitle {
+    font-size: 1.6em;
+  }
+
+  .float-menu {
+    left: 0;
+    top: 50%;
+    position: fixed;
+    transform: translate(0, -50%);
+  }
+
+  .float-nav {
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .hero-text {
+    padding: 3em;
+  }
+
+  .title {
+    font-size: 4em;
+  }
+
+  .subtitle {
+    font-size: 2em;
+  }
+}
+@media screen and (min-width: 980px) {
+  .works {
+    width: 30em;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .flex-container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  
+  .works {
+    width: 26em;
+  }
+}
+
+</style>
+
+<body>
+<script type="text/javascript"></script>
+<header class="header">
+		<nav id="navbar" class="nav">
+			<ul>
+				<li class="nav-item">
+					<a href="#welcome-section">About</a>
+				</li>
+				<li class="nav-item">
+					<a href="#projects">Projects</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+  
+	<div class="container">
+		<section class="hero-image" id="welcome-section">
+			<div class="hero-text">
+				<div class="logo">
+					<img src="https://www.iconeasy.com/icon/png/Kids/The%20Batman%20Vol.%201/Batman.png" alt="Batman logo" class="logo">
+				</div>
+				<h1 class="title">
+					Suryani
+				</h1>
+				<h2 class="subtitle">
+					1700016109
+				</h2>
+		</section>
+
+		<section class="featured" id="projects">
+			<h2 class="featured-title">PROJECTS</h2>
+			<hr class="line">
+			<div class="flex-container">
+				<div class="works project-tile">
+					<div class="image-container">
+							<picture class="works-image">
+									<source srcset="assets/1.png" media="(max-width: 767px)">
+									<source srcset="assets/1.png" media="(min-width: 768px)">
+									<img src="assets/1.png" alt="Pixel Art Maker Screenshot"
+									 class="works-image">
+								</picture>
+								<div class="hover-effect" tabindex="0">
+			
+									<div class="button-container">
+										<a href="Praktikum_1_1700016109.html" class="codepen-link" target="_blank">Praktikum 1</a>
+									</div>
+								</div>
+					</div>
+					<h2 class="works-title">Canvas HTML</h2>
+				</div>
+				   <div class="works project-tile">
+          <div class="image-container">
+              <picture class="works-image">
+                  <source srcset="assets/2.png" media="(max-width: 767px)">
+                  <source srcset="assets/2.png" media="(min-width: 768px)">
+                  <img src="assets/2.png" alt="Pixel Art Maker Screenshot"
+                   class="works-image">
+                </picture>
+                <div class="hover-effect" tabindex="0">
+      
+                  <div class="button-container">
+                    <a href="Praktikum_2_1700016109.html" class="codepen-link" target="_blank">Praktikum 2</a>
+                  </div>
+                </div>
+          </div>
+          <h2 class="works-title">Interaktivitas</h2>
+        </div>
+
+				   <div class="works project-tile">
+          <div class="image-container">
+              <picture class="works-image">
+                  <source srcset="assets/3.png" media="(max-width: 767px)">
+                  <source srcset="assets/3.png" media="(min-width: 768px)">
+                  <img src="assets/3.png" alt="Pixel Art Maker Screenshot"
+                   class="works-image">
+                </picture>
+                <div class="hover-effect" tabindex="0">
+      
+                  <div class="button-container">
+                    <a href="Praktikum_3_1700016109.html" class="codepen-link" target="_blank">Praktikum 3</a>
+                  </div>
+                </div>
+          </div>
+          <h2 class="works-title">Canvas Pattern Art</h2>
+        </div>
+			
+<div class="works project-tile">
+          <div class="image-container">
+              <picture class="works-image">
+                  <source srcset="assets/4.png" media="(max-width: 767px)">
+                  <source srcset="assets/4.png" media="(min-width: 768px)">
+                  <img src="assets/4.png" alt="Pixel Art Maker Screenshot"
+                   class="works-image">
+                </picture>
+                <div class="hover-effect" tabindex="0">
+      
+                  <div class="button-container">
+                    <a href="Praktikum_4_1700016109.html" class="codepen-link" target="_blank">Praktikum 4</a>
+                  </div>
+                </div>
+          </div>
+          <h2 class="works-title">Puzzle</h2>
+        </div>
+
+        <div class="works project-tile">
+          <div class="image-container">
+              <picture class="works-image">
+                  <source srcset="assets/5.png" media="(max-width: 767px)">
+                  <source srcset="assets/5.png" media="(min-width: 768px)">
+                  <img src="assets/5.png" alt="Pixel Art Maker Screenshot"
+                   class="works-image">
+                </picture>
+                <div class="hover-effect" tabindex="0">
+      
+                  <div class="button-container">
+                    <a href="Praktikum_5_1700016109.html" class="codepen-link" target="_blank">Praktikum 5</a>
+                  </div>
+                </div>
+          </div>
+          <h2 class="works-title">Animation</h2>
+        </div>
+
+        <div class="works project-tile">
+          <div class="image-container">
+              <picture class="works-image">
+                  <source srcset="assets/6.png" media="(max-width: 767px)">
+                  <source srcset="assets/6.png" media="(min-width: 768px)">
+                  <img src="assets/6.png" alt="Pixel Art Maker Screenshot"
+                   class="works-image">
+                </picture>
+                <div class="hover-effect" tabindex="0">
+      
+                  <div class="button-container">
+                    <a href="Praktikum_6_1700016109.html" class="codepen-link" target="_blank">Praktikum 6</a>
+                  </div>
+                </div>
+          </div>
+          <h2 class="works-title">Audio Visualizer</h2>
+        </div>
+
+      </div>
+
+		</section>
+		<footer class="footer">
+			<p class="copyright">
+				
+			</p>
+		</footer>
+
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="./js/app.js"></script>
+
+</body>
 </html>
