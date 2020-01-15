@@ -64,7 +64,7 @@
 		for(var i =0; i<100; i++){
             var x = Math.random()*myApp.canvas.width;
 			var y = Math.random()*myApp.canvas.height;
-			ball[i]= new Sprite(x,y,Math.random()*3,'white');
+			ball[i]= new Sprite(x,y,Math.random()*8,'white');
 		}
 	}
 	var myApp = {
@@ -99,7 +99,7 @@ function Sprite(x,y,radius,color){
 	this.y=y;
 	this.radius=radius;
 	this.color=color;
-	this.speed=(Math.random()*7);
+	this.speed=(Math.random()*8);
 	var ctx=myApp.context;
 	this.update=function(){
 			ctx.beginPath();
