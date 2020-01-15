@@ -1,179 +1,66 @@
-<!doctype html>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
+<marquee direction="left" widht ="60%" scrolldelay="2" style="color:black;font-family:courier;font-size:200%;">UNTUK MENGUNDUH HASIL FOTO YANG SUDAH DI POTONG YAITU DENGAN MENGKLIK KANAN, LALU SAVE IMAGE AS</marquee>
 <head>
-	<title>Show Image</title>
-	<meta charset='utf-8'>	
-	</script>
-</head>
-<style type="text/css">
-	canvas{
-		background-color: lightblue;
-		box-sizing: border-box;
-		background-size: cover;
-        border: 10px solid white;
-        display: block;
-        margin: 0 auto;
-        width: 100%;
-        max-width: 640px;
-        box-shadow: 0px 0px 50px 1000px rgba(0,0,0,0.3);
-	}
-	body{
-		background-image: url("assets/sea.jpeg");
-		min-height: 50vh;
-        margin-top: 5rem;
-	}
+<meta charset="UTF-8">
+<meta name="apple-mobile-web-app-title" content="CodePen">
+<title>IMAGE CROPPING</title>
+<link rel='stylesheet' href='https://cdn.rawgit.com/alexk111/ngImgCrop/master/compile/minified/ng-img-crop.css'>
+<style>
+.cropArea {
+  background: transparent;
+  overflow: hidden;
+  width:500px;
+  height:350px;
+}
+  body{
+    background-image: url("https://i.ytimg.com/vi/hPCotoawhk0/maxresdefault.jpg");
+    min-height: 50vh;
+    margin-top: 2rem;
+  }
 </style>
-<body>
-
 <script>
-var img;
-var rect;
-var croppedImage;
-var btn;
-var avatar;
-var cropping=false;
-function startApp()
-{
-	
-	btn=document.getElementById('btn');
-	avatar=new Image();
-	avatar.src='assets/harry.jpg';
-	myApp.start();
-	img=new image(0,0);
-	rect=new rectComponent(0,0,1,1);
-
-	drawRect();
-}
-var myApp = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 600;
-        this.canvas.height = 400;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(apploop, 20);
-        //window.requestAnimationFrame(gameLoop);
-        //document.body.addEventListener('mousedown',addImage);
-    },
-    clear : function() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-}
-
-function image(x,y)
-{
-	this.x=x;
-	this.y=y;
-	this.width=400;
-	this.height=400;
-	var ctx=myApp.context;	
-	this.startCropX=x;
-	this.startCropY=y;
-	this.cropWidth=200;
-	this.cropHeight=200;
-	this.cropping=false;
-	this.update=function()
-	{
-		if(!this.cropping)
-		ctx.drawImage(avatar,this.x,this.y);
-		else
-		//ctx.drawImage(avatar,this.startCropX,this.startCropY,this.croptWidth,this.cropHeight,this.x,this.y,this.width,this.height);
-		ctx.drawImage(avatar,this.startCropX,this.startCropY,this.cropWidth,this.cropHeight,this.x,this.y,this.width,this.height);
-	}
-}
-
-function apploop()
-{
-	myApp.clear();
-	img.update();
-	rect.update();
-}
-
-function rectComponent(x,y,w,h)
-{
-	this.x=x;
-	this.y=y;
-	this.width=w;
-	this.height=h;
-	var contex=myApp.context;
-	this.update=function()
-	{
-		contex.beginPath();
-		contex.fillStyle = "rgba(0, 0, 0, 0.5)";
-		contex.fillRect(this.x, this.y, this.width, this.height);
-	}
-}
-
-function editingMode(mode)
-{
-	if(img.cropping) img.cropping=false; else img.cropping=true;
-}
-
-function cropImage()
-{
-	/*
-	var ctx=myApp.context;	
-	var cropStartX=rect.x,
-	cropStartY=rect.y,
-	cropWidth=100,
-	cropHeight=100,
-	imageX=500,
-	imageY=500,
-	imageWidth=cropWidth,
-	imageHeight=cropHeight;
-	var imageSource=new Image();
-	imageSource.src='minion.jpg';	
-	ctx.drawImage(imageSource,cropStartX,cropStartY,cropWidth,cropHeight,imageX,imageY,imageWidth,imageHeight);	
-	*/	
-	img.x=rect.x;
-	img.y=rect.y;
-	img.width=rect.width;
-	img.height=rect.height;
-	img.startCropX=rect.x;
-	img.startCropY=rect.y;
-	img.cropWidth=rect.width;
-	img.cropHeight=rect.height;
-	console.log(img);
-	
-}
-
-function drawRect()
-{
-	var x,y,rw,rh;
-	document.body.addEventListener('mousedown',function(e)
-    {
-    	x=e.offsetX;
-    	y=e.offsetY;
-    	rect=new rectComponent(x,y,1,1);
-    	document.body.addEventListener('mousemove',mouseMove);         
-        document.body.addEventListener('mouseup',mouseUp);
-    });
-    function mouseMove(e)
-    {
-    	rw=e.offsetX-rect.x;
-    	rh=e.offsetY-rect.y;
-    	rect.width=rw;
-    	rect.height=rh;    	
-    }
-    function mouseUp(e)
-    {    	
-    	document.body.removeEventListener('mousemove',mouseMove);
-      	document.body.removeEventListener('mouseup',mouseUp);
-      	img.cropping=true;
-      	cropImage();
-
-    }
-}
-function addImage()
-{
-	img.update();
-}
-
-startApp();
-
-
-
+  window.console = window.console || function(t) {};
 </script>
+<script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+</head>
+<body translate="no">
+<body ng-app="app" ng-controller="Ctrl as vm">
+<div>Select an image file: <input type="file" id="fileInput" /></div>
+<div class="cropArea">
+<img-crop image="vm.myImage" result-image="vm.myCroppedImage" result-image-format="image/jpeg" area-type="square"></img-crop>
+</div>
+<div>Cropped Image:</div>
+<div><img ng-src="{{vm.myCroppedImage}}" /></div>
 </body>
+<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-30d18ea41045577cdb11c797602d08e0b9c2fa407c8b81058b1c422053ad8041.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js'></script>
+<script src='https://cdn.rawgit.com/alexk111/ngImgCrop/master/compile/minified/ng-img-crop.js'></script>
+<script id="rendered-js">
+angular.module('app', ['ngImgCrop']).
+controller('Ctrl', function ($scope) {
+  var vm = this;
+  vm.myImage = '';
+  vm.myCroppedImage = '';
 
+  vm.handleFileSelect = function (evt) {
+    var file = evt.currentTarget.files[0];
+    var reader = new FileReader();
+    reader.onload = function (evt) {
+      $scope.$apply(function ($scope) {
+        vm.myImage = evt.target.result;
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+  angular.element(document.querySelector('#fileInput')).on('change', vm.handleFileSelect);
+});
+//# sourceURL=pen.js
+    </script>
+</body>
 </html>
