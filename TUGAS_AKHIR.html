@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<marquee direction="left" widht ="60%" scrolldelay="20" style="color:black;font-family:courier;font-size:200%;"> PLAY THE MUSIC WHILE WATCHING.. ENJOY!</marquee>
+<head>
+	<title>SNOW FALL</title>
+	<style type="text/css">
+		body {
+        background-color: white;
+        min-height: 10vh;
+        margin-top: 1rem;
+  }
+		canvas{
+			background-image: url('https://i.pinimg.com/originals/b0/da/8d/b0da8d751585425ded0ba1ef85223847.png');
+            background-size: 1201px 480px;
+            margin-left: 24px;
+		}
+		#spongebob {
+         width: 150px;
+         height: 170px;
+         position:absolute;
+         z-index:999;
+         bottom:30%;
+         left:65%;
+         background-color:rgba(0,255,0,0.0);
+}
+        #gary{
+         width: 140px;
+         height: 100px;
+         position:absolute;
+         z-index:999;
+         bottom:24%;
+         left:75%;
+         background-color:rgba(0,255,0,0.0);
+}
+        #squidward {
+         width: 150px;
+         height: 180px;
+         position:absolute;
+         z-index:999;
+         bottom:30%;
+         left:43%;
+         background-color:rgba(0,255,0,0.0);
+}
+         #patrick {
+         width: 230px;
+         height: 250px;
+         position:absolute;
+         z-index:999;
+         bottom:25%;
+         left:8%;
+         background-color:rgba(0,255,0,0.0);
+}
+     
+	</style>
+</head>
+<body>
+<script type="text/javascript">
+
+	var ball=[];
+
+
+	function startMyApp(){
+		myApp.start();
+		for(var i =0; i<100; i++){
+            var x = Math.random()*myApp.canvas.width;
+			var y = Math.random()*myApp.canvas.height;
+			ball[i]= new Sprite(x,y,Math.random()*3,'white');
+		}
+	}
+	var myApp = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 1200;
+        this.canvas.height = 410;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);  
+        appControl();
+        this.interval = setInterval(appLoop, 20);
+    },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+function appLoop(){
+	myApp.clear();
+ 	for(var i=0;i<ball.length;i++){
+        ball[i].x += ball[i].speed;
+        ball[i].y += ball[i].speed;
+        if(ball[i].x>myApp.canvas.width) ball[i].x=0;
+        if(ball[i].y>myApp.canvas.height) ball[i].y=0;
+        ball[i].update();
+    }
+}
+
+//LINGKARAN
+
+function Sprite(x,y,radius,color){
+	this.x=x;
+	this.y=y;
+	this.radius=radius;
+	this.color=color;
+	this.speed=(Math.random()*7);
+	var ctx=myApp.context;
+	this.update=function(){
+			ctx.beginPath();
+			ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
+			ctx.fillStyle = this.color;
+			ctx.fill();
+	}
+}
+
+function appControl(){
+	document.body.addEventListener('mousedown',function(e){})
+}
+startMyApp(); 
+</script>
+<img id="spongebob" src='assets/spongee.gif' border='0'/>
+<img id="squidward" src='assets/squidward.gif' border='0'/>
+<img id="gary" src='assets/gary.gif' border='0'/>
+<img id="patrick" src='assets/patrick.gif' border='0'/>
+
+<audio src="assets/spongebob.mp3" autoplay controls >Justin bieber- Mistletoe</audio>
+</body>
+</html>
